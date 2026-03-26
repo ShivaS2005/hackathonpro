@@ -1,91 +1,97 @@
+// models/Task.js
 const mongoose = require("mongoose");
 
 const taskSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   dueDate: {
     type: Date,
-    required: true
+    required: true,
   },
   category: {
     type: String,
     enum: ["urgent", "medium", "least"],
-    default: "medium"
+    default: "medium",
   },
   assignedTo: {
-    type: String,  // Store employee ID as string (e.g., "EMP001")
-    default: null
+    type: String, // Store employee ID as string (e.g., "EMP001")
+    default: null,
   },
   assignedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    required: true,
   },
   status: {
     type: String,
     enum: ["pending", "in-progress", "completed"],
-    default: "pending"
+    default: "pending",
   },
   priority: {
     type: String,
     enum: ["low", "medium", "high"],
-    default: "medium"
+    default: "medium",
   },
-  attachments: [{
-    fileName: String,
-    fileUrl: String,
-    uploadedAt: Date
-  }],
-  comments: [{
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+  attachments: [
+    {
+      fileName: String,
+      fileUrl: String,
+      uploadedAt: Date,
     },
-    comment: String,
-    createdAt: {
-      type: Date,
-      default: Date.now
-    }
-  }],
+  ],
+  comments: [
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      comment: String,
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   completedAt: {
     type: Date,
-    default: null
+    default: null,
   },
   completedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Employee"
+    ref: "Employee",
   },
   estimatedHours: {
     type: Number,
-    default: null
+    default: null,
   },
   actualHours: {
     type: Number,
-    default: null
+    default: null,
   },
   isOverdue: {
     type: Boolean,
-    default: false
+    default: false,
   },
   reminderSent: {
     type: Boolean,
-    default: false
+    default: false,
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model("Task", taskSchema);
+// Prevent model overwrite errors in serverless functions
+module.exports = mongoose.models.Task || mongoose.model("Task", taskSchema);

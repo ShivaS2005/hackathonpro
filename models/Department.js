@@ -1,3 +1,4 @@
+// models/Department.js
 const mongoose = require("mongoose");
 
 const departmentSchema = new mongoose.Schema({
@@ -5,32 +6,33 @@ const departmentSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    trim: true
+    trim: true,
   },
   description: {
     type: String,
-    default: ""
+    default: "",
   },
   manager: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
   },
   employeeCount: {
     type: Number,
-    default: 0
+    default: 0,
   },
   isActive: {
     type: Boolean,
-    default: true
+    default: true,
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model("Department", departmentSchema);
+// Prevent model overwrite errors in serverless functions
+module.exports = mongoose.models.Department || mongoose.model("Department", departmentSchema);

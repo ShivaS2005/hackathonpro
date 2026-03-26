@@ -1,20 +1,21 @@
+// models/Report.js
 const mongoose = require("mongoose");
 
 const reportSchema = new mongoose.Schema({
   taskId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Task",
-    required: true
+    required: true,
   },
   generatedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    required: true,
   },
   reportType: {
     type: String,
     enum: ["task_detail", "employee_performance", "completion_rate", "overdue_tasks"],
-    default: "task_detail"
+    default: "task_detail",
   },
   reportData: {
     taskName: String,
@@ -26,16 +27,17 @@ const reportSchema = new mongoose.Schema({
     dueDate: Date,
     completedAt: Date,
     completionPercentage: Number,
-    attachments: [String]
+    attachments: [String],
   },
   pdfUrl: {
     type: String,
-    default: null
+    default: null,
   },
   generatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model("Report", reportSchema);
+// Prevent model overwrite errors in serverless functions
+module.exports = mongoose.models.Report || mongoose.model("Report", reportSchema);

@@ -1,45 +1,47 @@
+// models/DeadlineReminder.js
 const mongoose = require("mongoose");
 
 const deadlineReminderSchema = new mongoose.Schema({
   taskId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Task",
-    required: true
+    required: true,
   },
   employeeId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Employee",
-    required: true
+    required: true,
   },
   reminderDate: {
     type: Date,
-    required: true
+    required: true,
   },
   reminderType: {
     type: String,
     enum: ["24_hours", "12_hours", "6_hours", "1_hour", "overdue"],
-    default: "24_hours"
+    default: "24_hours",
   },
   sent: {
     type: Boolean,
-    default: false
+    default: false,
   },
   sentAt: {
     type: Date,
-    default: null
+    default: null,
   },
   acknowledged: {
     type: Boolean,
-    default: false
+    default: false,
   },
   acknowledgedAt: {
     type: Date,
-    default: null
+    default: null,
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model("DeadlineReminder", deadlineReminderSchema);
+// Prevent model overwrite errors in serverless functions
+module.exports = mongoose.models.DeadlineReminder || mongoose.model("DeadlineReminder", deadlineReminderSchema);

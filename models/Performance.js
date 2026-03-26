@@ -1,60 +1,62 @@
+// models/Performance.js
 const mongoose = require("mongoose");
 
 const performanceSchema = new mongoose.Schema({
   employeeId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Employee",
-    required: true
+    required: true,
   },
   month: {
     type: Date,
-    required: true
+    required: true,
   },
   totalTasksAssigned: {
     type: Number,
-    default: 0
+    default: 0,
   },
   totalTasksCompleted: {
     type: Number,
-    default: 0
+    default: 0,
   },
   totalTasksOverdue: {
     type: Number,
-    default: 0
+    default: 0,
   },
   completionRate: {
     type: Number,
-    default: 0
+    default: 0,
   },
   averageCompletionTime: {
     type: Number,
-    default: 0
+    default: 0,
   },
   tasksCategoryWise: {
     urgent: { type: Number, default: 0 },
     medium: { type: Number, default: 0 },
-    least: { type: Number, default: 0 }
+    least: { type: Number, default: 0 },
   },
   performanceScore: {
     type: Number,
-    default: 0
+    default: 0,
   },
   remarks: {
     type: String,
-    default: ""
+    default: "",
   },
   evaluatedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model("Performance", performanceSchema);
+// Prevent model overwrite errors in serverless functions
+module.exports = mongoose.models.Performance || mongoose.model("Performance", performanceSchema);
