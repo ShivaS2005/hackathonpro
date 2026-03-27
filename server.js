@@ -13,7 +13,7 @@ const app = express();
 // ===========================
 // Allow only your Netlify frontend or localhost in dev
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: process.env.FRONTEND_URL || "https://unrivaled-twilight-8835be.netlify.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
@@ -70,6 +70,24 @@ app.use("/api/employees", require("./routes/employees"));
 app.use("/api/tasks", require("./routes/tasks"));
 app.use("/api/notifications", require("./routes/notifications"));
 app.use("/api/ai-chat", require("./routes/aiChat"));
+
+/* ===========================
+   ROOT ROUTE
+=========================== */
+app.get("/", (req, res) => {
+  res.json({ 
+    message: "Employee Task Manager Backend API",
+    version: "1.0.0",
+    endpoints: {
+      health: "/health",
+      auth: "/api/auth",
+      employees: "/api/employees", 
+      tasks: "/api/tasks",
+      notifications: "/api/notifications",
+      aiChat: "/api/ai-chat"
+    }
+  });
+});
 
 /* ===========================
    HEALTH CHECK
