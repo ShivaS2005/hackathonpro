@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE_URL from '../config/api';
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
@@ -33,7 +34,7 @@ const EmployeeList = () => {
         setLoading(false);
         return;
       }
-      const response = await fetch(`http://localhost:5000/api/employees?employerId=${user._id}`);
+      const response = await fetch(`${API_BASE_URL}/api/employees?employerId=${user._id}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch employees');
@@ -73,7 +74,7 @@ const EmployeeList = () => {
         return;
       }
       
-      const response = await fetch('http://localhost:5000/api/employees', {
+      const response = await fetch(`${API_BASE_URL}/api/employees`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +111,7 @@ const EmployeeList = () => {
 
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/api/employees/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/employees/${id}`, {
         method: 'DELETE'
       });
 

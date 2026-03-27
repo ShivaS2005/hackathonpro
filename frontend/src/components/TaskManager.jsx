@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE_URL from '../config/api';
 
 const TaskManager = () => {
   const [tasks, setTasks] = useState([]);
@@ -23,7 +24,7 @@ const TaskManager = () => {
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5000/api/tasks');
+      const response = await fetch(`${API_BASE_URL}/api/tasks`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch tasks');
@@ -54,7 +55,7 @@ const TaskManager = () => {
         setError('User ID not found');
         return;
       }
-      const response = await fetch(`http://localhost:5000/api/employees?employerId=${user._id}`);
+      const response = await fetch(`${API_BASE_URL}/api/employees?employerId=${user._id}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch employees');
@@ -92,7 +93,7 @@ const TaskManager = () => {
         return;
       }
       
-      const response = await fetch('http://localhost:5000/api/tasks', {
+      const response = await fetch(`${API_BASE_URL}/api/tasks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -140,7 +141,7 @@ const TaskManager = () => {
 
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/api/tasks/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${id}`, {
         method: 'DELETE'
       });
 
@@ -371,7 +372,7 @@ const TaskManager = () => {
   const downloadProgressReport = async (taskId) => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/api/tasks/${taskId}/progress-report`);
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}/progress-report`);
       
       if (!response.ok) {
         throw new Error('Failed to generate progress report');
@@ -380,7 +381,7 @@ const TaskManager = () => {
       const data = await response.json();
       
       // Download the PDF
-      window.open(`http://localhost:5000/api/tasks/download-report/${data.fileName}`, '_blank');
+      window.open(`${API_BASE_URL}/api/tasks/download-report/${data.fileName}`, '_blank');
     } catch (err) {
       setError('Failed to download progress report: ' + err.message);
       console.error('Error downloading progress report:', err);

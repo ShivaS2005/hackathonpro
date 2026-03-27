@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import API_BASE_URL from '../config/api';
 
 const AIChat = () => {
   const [messages, setMessages] = useState([
@@ -37,7 +38,7 @@ const AIChat = () => {
       // Send to backend
       try {
         const user = JSON.parse(localStorage.getItem('user') || '{}');
-        const response = await fetch('http://localhost:5000/api/ai-chat/chat', {
+        const response = await fetch(`${API_BASE_URL}/api/ai-chat/chat`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

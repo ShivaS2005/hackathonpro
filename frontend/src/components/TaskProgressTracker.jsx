@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE_URL from '../config/api';
 import '../styles/taskProgress.css';
 
 const TaskProgressTracker = ({ taskId, taskName, onClose, isEmployer = false }) => {
@@ -51,7 +52,7 @@ const TaskProgressTracker = ({ taskId, taskName, onClose, isEmployer = false }) 
   const fetchProgressEntries = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/api/tasks/${taskId}/progress`);
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}/progress`);
       if (!response.ok) {
         throw new Error('Failed to fetch progress entries');
       }
@@ -108,7 +109,7 @@ const TaskProgressTracker = ({ taskId, taskName, onClose, isEmployer = false }) 
       setLoading(true);
       setError('');
 
-      const response = await fetch(`http://localhost:5000/api/tasks/${taskId}/progress`, {
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}/progress`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -149,7 +150,7 @@ const TaskProgressTracker = ({ taskId, taskName, onClose, isEmployer = false }) 
   const handleGenerateReport = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/api/tasks/${taskId}/progress-report`);
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}/progress-report`);
       
       if (!response.ok) {
         throw new Error('Failed to generate report');
@@ -158,7 +159,7 @@ const TaskProgressTracker = ({ taskId, taskName, onClose, isEmployer = false }) 
       const data = await response.json();
       
       // Download the PDF
-      window.open(`http://localhost:5000/api/tasks/download-report/${data.fileName}`, '_blank');
+      window.open(`${API_BASE_URL}/api/tasks/download-report/${data.fileName}`, '_blank');
       setSuccess('Report downloaded successfully!');
       setTimeout(() => setSuccess(''), 3000);
     } catch (err) {

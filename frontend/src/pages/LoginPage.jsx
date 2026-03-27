@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import API_BASE_URL from '../config/api';
 import '../styles/auth.css';
 
 const LoginPage = ({ onLogin }) => {
@@ -28,7 +29,7 @@ const LoginPage = ({ onLogin }) => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -56,7 +57,7 @@ const LoginPage = ({ onLogin }) => {
       // Call parent handler
       onLogin(userType);
     } catch (err) {
-      setError('Network error. Make sure backend is running on port 5000');
+      setError('Network error. Please check your connection');
       console.error('Login error:', err);
     } finally {
       setLoading(false);
@@ -82,7 +83,7 @@ const LoginPage = ({ onLogin }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/signup', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -112,7 +113,7 @@ const LoginPage = ({ onLogin }) => {
       alert('Signup successful! Logging you in...');
       onLogin(userType);
     } catch (err) {
-      setError('Network error. Make sure backend is running on port 5000');
+      setError('Network error. Please check your connection');
       console.error('Signup error:', err);
     } finally {
       setLoading(false);

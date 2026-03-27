@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE_URL from '../config/api';
 import TaskProgressTracker from './TaskProgressTracker';
 
 const TaskList = () => {
@@ -18,11 +19,11 @@ const TaskList = () => {
       setLoading(true);
       
       // For employee, fetch tasks by employee ID
-      let url = 'http://localhost:5000/api/tasks';
+      let url = `${API_BASE_URL}/api/tasks`;
       
       if (user.userType === 'employee' && user._id) {
         // Get tasks assigned to this employee
-        url = `http://localhost:5000/api/tasks/user/${user._id}`;
+        url = `${API_BASE_URL}/api/tasks/user/${user._id}`;
       }
 
       const response = await fetch(url);
@@ -55,7 +56,7 @@ const TaskList = () => {
 
   const markTaskComplete = async (taskId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/tasks/${taskId}/complete`, {
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}/complete`, {
         method: 'PATCH'
       });
 
