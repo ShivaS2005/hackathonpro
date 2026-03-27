@@ -13,7 +13,7 @@ const app = express();
 // ===========================
 // Allow only your Netlify frontend or localhost in dev
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "https://animated-empanada-945db3.netlify.app",
+  origin: process.env.FRONTEND_URL || "https://frolicking-liger-f130ea.netlify.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
