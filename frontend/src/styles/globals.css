@@ -3,12 +3,16 @@
   --light-green: #C3CC9B;
   --cream: #E4DFB5;
   --light-cream: #FBE8CE;
-  --text-dark: #2c2c2c;
-  --text-light: #666666;
+  --text-dark: #2c3e2c;
+  --text-light: #5a6b5a;
+  --text-muted: #8a9a8a;
   --white: #ffffff;
   --danger: #d32f2f;
   --success: #388e3c;
   --warning: #f57c00;
+  --shadow-soft: rgba(154, 177, 122, 0.15);
+  --shadow-medium: rgba(154, 177, 122, 0.25);
+  --shadow-strong: rgba(154, 177, 122, 0.35);
 }
 
 * {
@@ -17,11 +21,46 @@
   box-sizing: border-box;
 }
 
+#root {
+  width: 100vw;
+  max-width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f5f5;
+  background: linear-gradient(135deg, #FBE8CE 0%, #E4DFB5 100%);
   color: var(--text-dark);
   line-height: 1.6;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #FBE8CE 0%, #E4DFB5 100%);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 /* Typography */
@@ -30,6 +69,7 @@ h1 {
   font-weight: 700;
   color: var(--primary-green);
   margin-bottom: 0.5rem;
+  text-shadow: 0 1px 2px rgba(154, 177, 122, 0.2);
 }
 
 h2 {
@@ -37,6 +77,7 @@ h2 {
   font-weight: 600;
   color: var(--primary-green);
   margin-bottom: 1rem;
+  text-shadow: 0 1px 1px rgba(154, 177, 122, 0.15);
 }
 
 h3 {
@@ -49,63 +90,94 @@ h3 {
 p {
   color: var(--text-light);
   margin-bottom: 1rem;
+  font-weight: 400;
 }
 
 a {
   color: var(--primary-green);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 a:hover {
-  color: var(--light-green);
+  color: var(--text-dark);
+  text-shadow: 0 1px 2px rgba(154, 177, 122, 0.2);
+  transform: translateY(-1px);
 }
 
 /* Buttons */
 button {
   padding: 10px 20px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
+  box-shadow: 0 2px 4px var(--shadow-soft);
 }
 
 .add-btn,
 .submit-btn,
 .login-btn {
-  background-color: var(--primary-green);
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
   color: white;
+  border: 1px solid var(--primary-green);
 }
 
 .add-btn:hover,
 .submit-btn:hover,
 .login-btn:hover {
-  background-color: var(--light-green);
+  background: linear-gradient(135deg, var(--light-green) 0%, var(--primary-green) 100%);
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow-medium);
 }
 
 .cancel-btn {
-  background-color: #e0e0e0;
+  background: linear-gradient(135deg, var(--cream) 0%, var(--light-cream) 100%);
   color: var(--text-dark);
+  border: 1px solid var(--cream);
 }
 
 .cancel-btn:hover {
-  background-color: #d0d0d0;
+  background: linear-gradient(135deg, var(--light-cream) 0%, var(--cream) 100%);
+  box-shadow: 0 2px 4px var(--shadow-soft);
 }
 
 .action-btn {
-  background-color: var(--light-green);
+  background: linear-gradient(135deg, var(--light-green) 0%, var(--cream) 100%);
   color: var(--text-dark);
   padding: 8px 12px;
   font-size: 0.9rem;
   margin-right: 5px;
+  border: 1px solid var(--light-green);
+  border-radius: 6px;
 }
 
 .action-btn:hover {
-  background-color: var(--primary-green);
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
   color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px var(--shadow-medium);
+}
+
+.action-btn.report {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.action-btn.report:hover {
+  background-color: #357abd;
+}
+
+.action-btn.progress {
+  background-color: #667eea;
+  color: white;
+}
+
+.action-btn.progress:hover {
+  background-color: #764ba2;
 }
 
 .action-btn.delete {
@@ -123,12 +195,14 @@ textarea,
 select {
   width: 100%;
   padding: 12px;
-  border: 2px solid var(--light-cream);
-  border-radius: 6px;
+  border: 2px solid var(--cream);
+  border-radius: 8px;
   font-size: 1rem;
   font-family: inherit;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
   margin-bottom: 0.5rem;
+  background: white;
+  color: var(--text-dark);
 }
 
 input:focus,
@@ -136,7 +210,8 @@ textarea:focus,
 select:focus {
   outline: none;
   border-color: var(--primary-green);
-  box-shadow: 0 0 0 3px rgba(154, 177, 122, 0.1);
+  box-shadow: 0 0 0 3px rgba(154, 177, 122, 0.15);
+  background: white;
 }
 
 textarea {
@@ -151,17 +226,20 @@ textarea {
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-dark);
+  font-size: 0.95rem;
 }
 
 /* Utilities */
 .empty-message {
   text-align: center;
   padding: 2rem;
-  color: var(--text-light);
-  background-color: var(--light-cream);
-  border-radius: 6px;
+  color: var(--text-muted);
+  background: linear-gradient(135deg, var(--light-cream) 0%, var(--cream) 100%);
+  border-radius: 8px;
+  border: 1px solid var(--cream);
+  font-style: italic;
 }
 
 .badge {
@@ -179,6 +257,10 @@ textarea {
 
 /* Responsive */
 @media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
   h1 {
     font-size: 2rem;
   }
@@ -190,5 +272,39 @@ textarea {
   button {
     padding: 8px 16px;
     font-size: 0.9rem;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+  }
+
+  .ai-chat-container {
+    height: calc(100vh - 150px);
+    min-height: 400px;
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+
+  .task-progress-tracker {
+    margin: 10px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-content {
+    padding: 0.5rem;
+  }
+
+  .ai-chat-container {
+    height: calc(100vh - 120px);
+    min-height: 350px;
+    margin: 0.25rem;
+    padding: 0.75rem;
+  }
+
+  .task-progress-tracker {
+    margin: 5px;
+    border-radius: 6px;
   }
 }

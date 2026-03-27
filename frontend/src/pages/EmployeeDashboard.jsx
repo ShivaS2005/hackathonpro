@@ -4,14 +4,23 @@ import TaskList from '../components/TaskList';
 import AIChat from '../components/AIChat';
 import Notifications from '../components/Notifications';
 
-const EmployeeDashboard = () => {
+const EmployeeDashboard = ({ onLogout }) => {
   const [activeTab, setActiveTab] = useState('tasks');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
-        <h1>Employee Dashboard</h1>
-        <Notifications />
+        <div className="header-left">
+          <h1>Employee Dashboard</h1>
+          <p className="user-info">Welcome, {user.name || 'User'}</p>
+        </div>
+        <div className="header-right">
+          <Notifications />
+          <button className="logout-btn" onClick={onLogout}>
+            Logout
+          </button>
+        </div>
       </header>
 
       <nav className="dashboard-nav">

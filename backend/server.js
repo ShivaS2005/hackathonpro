@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
@@ -9,6 +10,11 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors());
+
+// MongoDB Connection
+mongoose.connect(process.env.DATABASE_URL || 'mongodb+srv://23csea06bavakarnig:fLh1FEQ7iqGmDTG5@cluster0.39smckc.mongodb.net/hackathon')
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
 app.use("/api/auth", require("./routes/auth"));

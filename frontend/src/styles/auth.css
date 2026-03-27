@@ -3,22 +3,31 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 50%, var(--cream) 100%);
   padding: 1rem;
+  position: relative;
+  width: 100vw;
 }
 
 .login-box {
-  background: white;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
   padding: 3rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px var(--shadow-medium);
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--cream);
+  position: relative;
+  overflow: hidden;
 }
 
 .login-box h1 {
   text-align: center;
   margin-bottom: 0.5rem;
+  color: var(--primary-green);
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(154, 177, 122, 0.2);
 }
 
 .subtitle {
@@ -26,6 +35,7 @@
   font-size: 0.95rem;
   color: var(--text-light);
   margin-bottom: 2rem;
+  font-weight: 500;
 }
 
 .user-type-selector {
@@ -37,32 +47,36 @@
 .type-btn {
   flex: 1;
   padding: 12px;
-  border: 2px solid var(--light-cream);
-  background: white;
+  border: 2px solid var(--cream);
+  background: linear-gradient(135deg, var(--light-cream) 0%, var(--cream) 100%);
   color: var(--text-dark);
-  border-radius: 6px;
-  font-weight: 500;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 6px var(--shadow-soft);
 }
 
 .type-btn:hover {
   border-color: var(--primary-green);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-medium);
 }
 
 .type-btn.active {
-  background-color: var(--primary-green);
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
   color: white;
   border-color: var(--primary-green);
+  box-shadow: 0 4px 16px var(--shadow-medium);
 }
 
 .error-message {
-  background-color: #ffebee;
-  color: #c62828;
+  background-color: #E4DFB5;
+  color: #9AB17A;
   padding: 12px;
   border-radius: 6px;
   margin-bottom: 1rem;
-  border-left: 4px solid #c62828;
+  border-left: 4px solid #9AB17A;
   font-size: 0.9rem;
   font-weight: 500;
 }

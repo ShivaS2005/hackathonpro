@@ -4,14 +4,23 @@ import EmployeeList from '../components/EmployeeList';
 import TaskManager from '../components/TaskManager';
 import Notifications from '../components/Notifications';
 
-const EmployerDashboard = () => {
+const EmployerDashboard = ({ onLogout }) => {
   const [activeTab, setActiveTab] = useState('overview');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
-        <h1>Employer Dashboard</h1>
-        <Notifications />
+        <div className="header-left">
+          <h1>Employer Dashboard</h1>
+          <p className="user-info">Welcome, {user.name || 'User'}</p>
+        </div>
+        <div className="header-right">
+          <Notifications />
+          <button className="logout-btn" onClick={onLogout}>
+            Logout
+          </button>
+        </div>
       </header>
 
       <nav className="dashboard-nav">
@@ -33,19 +42,12 @@ const EmployerDashboard = () => {
         >
           Task Management
         </button>
-        <button 
-          className={`nav-btn ${activeTab === 'reports' ? 'active' : ''}`}
-          onClick={() => setActiveTab('reports')}
-        >
-          Reports
-        </button>
       </nav>
 
       <main className="dashboard-content">
         {activeTab === 'overview' && <OverviewTab />}
         {activeTab === 'employees' && <EmployeeList />}
         {activeTab === 'tasks' && <TaskManager />}
-        {activeTab === 'reports' && <ReportsTab />}
       </main>
     </div>
   );
@@ -71,13 +73,6 @@ const OverviewTab = () => (
         <p className="stat-number">0</p>
       </div>
     </div>
-  </div>
-);
-
-const ReportsTab = () => (
-  <div className="reports-tab">
-    <h2>Task Reports</h2>
-    <p>Generate and view comprehensive PDF reports for all tasks and their completion status.</p>
   </div>
 );
 

@@ -34,7 +34,8 @@ const LoginPage = ({ onLogin }) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email: formData.email,
+          email: userType === 'employee' ? null : formData.email,
+          employeeId: userType === 'employee' ? formData.email : null,
           password: formData.password,
           userType: userType
         })
@@ -88,7 +89,8 @@ const LoginPage = ({ onLogin }) => {
         },
         body: JSON.stringify({
           name: formData.name,
-          email: formData.email,
+          email: userType === 'employee' ? null : formData.email,
+          employeeId: userType === 'employee' ? formData.email : null,
           password: formData.password,
           userType: userType
         })
@@ -161,16 +163,23 @@ const LoginPage = ({ onLogin }) => {
           )}
 
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">
+              {userType === 'employee' ? 'Employee ID' : 'Email'}
+            </label>
             <input
-              type="email"
+              type={userType === 'employee' ? 'text' : 'email'}
               id="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              placeholder="Enter your email"
+              placeholder={userType === 'employee' ? 'Enter your employee ID' : 'Enter your email'}
               required
             />
+            {userType === 'employee' && !isSignup && (
+              <small style={{color: '#666', marginTop: '5px', display: 'block'}}>
+                Don't have a password yet? <a href="#" onClick={(e) => {e.preventDefault(); setIsSignup(true);}} style={{color: '#9AB17A', textDecoration: 'none'}}>Sign up first</a>
+              </small>
+            )}
           </div>
 
           <div className="form-group">
